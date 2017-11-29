@@ -11,10 +11,10 @@ class Config(object):
     MAIL_SENDER = "FLASK ADMIN <{0}>".format(config.email_address)
 
     @staticmethod
-    def init_app():
+    def init_app(app):
         pass
 
-class DevConfig(Config):
+class DevelopmentConfig(Config):
     DEBUG = True
     MAIL_SERVER = config.mail_server
     MAIL_PORT = config.mail_port
@@ -24,6 +24,18 @@ class DevConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
                               'sqlite:///' + os.path.join(config.base_path, 'data-dev.sqlite')
 
+class TestingConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get("TEST_DATABASE_URL") or \
+        "sqlite:///" + os.path.join(config.base_path, 'data-test.sqlite')
+
+class ProductionConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") or \
+        "sqlite:///" + os.path.join(config.base_path, "data.sqlite")
+
 config = {
-    "devConfig": DevConfig
+    "devConfig": DevelopmentConfig,
+    "testing": TestingConfig,
+    "production": ProductionConfig,
+    "default": DevelopmentConfig
 }

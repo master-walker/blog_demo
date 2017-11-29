@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% if title%}
+    <title>{{title}}- microblog</title>
+    {% else%}
+    <title>microblog</title>
+    {% endif%}
+
+</head>
+<body>
+
+<div>
+    <ul class="nav navbar-nav navbar-right">
+    {% if current_user.is_authenticated() %}
+    <li><a href="{{ url_for('main.logout') }}">Sign Out</a></li>
+    {% else %}
+    <li><a href="{{ url_for('main.login') }}">Sign In</a></li>
+    {% endif %}
+    </ul>
+</div>
+{% block content %}
+    {% endblock %}
+</body>
+</html>

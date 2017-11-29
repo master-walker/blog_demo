@@ -12,7 +12,7 @@ sys.path.append(src_path)
 reload(sys)
 
 base_path = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
-config_path =os.path.join(base_path,"config","conf.ini")
+config_path =os.path.join(base_path,"utils","conf.ini")
 
 
 class Read_Config(object):
