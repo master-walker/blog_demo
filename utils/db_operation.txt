@@ -1,0 +1,7 @@
+在维护数据库迁移之前，要使用 init 子命令创建迁移仓库：
+python manage.py db init
+migrate 子命令用来自动创建迁移脚本：
+(venv) $ python hello.py db migrate -m "initial migration"
+更新
+python manage.py db upgrade
+

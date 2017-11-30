@@ -3,14 +3,14 @@
 
 from datetime import datetime
 from flask import render_template, session, redirect, url_for, request, flash
-from . import main
+from . import auth
 from .forms import LoginForm, RegistrationForm
 from ..models import User
 from .. import db
 from utils.common import send_mail
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 
-@main.route("/login", methods=["GET","POST"])
+@auth.route("/login", methods=["GET","POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -21,14 +21,31 @@ def login():
         flash("Invalid username or password")
     return render_template("login.html", form=form)
 
-@main.route("/logout")
+@auth.route("/logout")
 @login_required
 def logout():
     logout_user()
     flash("You have been logged out!")
     return redirect(url_for("main.index"))
 
-@main.route("/register", methods=["GET","POST"])
+@auth.route("/confirm/<token>")
+@login_required
+def confirm(token):
+    if current_user.confirmed:
+        return redirect(url_for("main.index"))
+    if current_user.confirm(token):
+        db.session.commit()
+        flash("You have confirmed your account,Thanks!")
+    else:
+        flash("The confirmation is invalid or has expired.")
+    return redirect(url_for("main.index"))
+
+@auth.route("/confirm")
+@login_required
+def resend_confirmation()
+    pass
+
+@auth.route("/register", methods=["GET","POST"])
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
