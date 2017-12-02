@@ -19,6 +19,7 @@ def create_app(config_name="default"):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
+    app.debug = True
     from .main import main as main_blue_print
     from .auth import auth as auth_blue_print
 
