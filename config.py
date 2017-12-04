@@ -9,6 +9,7 @@ class Config(object):
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     MAIL_SUBJECT_PREFIX = "[FLASK]"
     MAIL_SENDER = "FLASK ADMIN <{0}>".format(config.email_address)
+    SQLALCHEMY_MIGRATE_REPO = os.path.join(config.base_path, "db_repository")
 
     @staticmethod
     def init_app(app):

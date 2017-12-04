@@ -23,6 +23,7 @@ class Read_Config(object):
         config_parser.readfp(codecs.open(path,"r","utf-8-sig"))
 
         self.base_path = base_path
+        self.db_path = os.path.join(base_path, "db")
         self.template_path = os.path.join(base_path,"requirements")
 
         # email data
